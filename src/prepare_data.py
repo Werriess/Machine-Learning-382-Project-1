@@ -12,11 +12,14 @@ def prepare_data(data):
         df_raw_new.isnull().sum()/len(df_raw_new)*100
     ).round(0).astype(int)
 
-    for col in df_raw_new.columns:
-        if df_raw_new[col].dtype == 'int64' or df_raw_new[col].dtype == 'float64':
-            df_raw_new[col].fillna(df_raw_new[col].mean(), inplace=True)
-        else:
-            df_raw_new[col].fillna(df_raw_new[col].mode(), inplace=True)
+    df_raw_new['LoanAmount'].fillna(df_raw_new['LoanAmount'].mean(), inplace=True)
+    df_raw_new['Loan_Amount_Term'].fillna(df_raw_new['Loan_Amount_Term'].mode()[0], inplace=True)
+    df_raw_new['Credit_History'].fillna(df_raw_new['Credit_History'].mode()[0], inplace=True)
+    
+    df_raw_new['Gender'].fillna(df_raw_new['Gender'].mode()[0], inplace=True)
+    df_raw_new['Married'].fillna(df_raw_new['Married'].mode()[0], inplace=True)
+    df_raw_new['Dependents'].fillna(df_raw_new['Dependents'].mode()[0], inplace=True)
+    df_raw_new['Self_Employed'].fillna(df_raw_new['Self_Employed'].mode()[0], inplace=True)
 
     min_mask = lambda col, val: df_raw_new[col] < val
     income_mask = min_mask('ApplicantIncome',10000)

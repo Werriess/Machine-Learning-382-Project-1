@@ -8,8 +8,7 @@ from sklearn.model_selection import train_test_split
 from scikeras.wrappers import KerasClassifier
 
 
-df = prepare_data('./Project 1 MLG/data/raw_data.csv')
-df.drop(columns = 'Married_nan', inplace= True)
+df = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/raw_data.csv')
 X = df.drop(['Loan_Status'], axis=1)
 y = df['Loan_Status']
 
@@ -21,7 +20,7 @@ X_test_scaled = scaler.transform(X_test)
 
 def create_model():
     model = Sequential([
-        Dense(25, activation='relu', input_shape=(25,)),
+        Dense(21, activation='relu', input_shape=(21,)),
         Dense(8, activation='relu'),
         Dense(8, activation='relu'),
         Dense(1, activation='sigmoid')

@@ -17,7 +17,7 @@ X_test_scaled = scaler.transform(X_test)
 
 def create_model():
     model = Sequential([
-        Dense(26, activation='relu', input_shape=(26,)),
+        Dense(21, activation='relu', input_shape=(21,)),
         Dense(8, activation='relu'),
         Dense(8, activation='relu'),
         Dense(1, activation='sigmoid')
@@ -33,9 +33,8 @@ joblib.dump(model, '../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/
 model = joblib.load('../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model1.pkl')
 
 datav = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/validation.csv')
-datav.insert(5, 'Married_nan', 0)
 
-datav = datav.iloc[:, [0, 1, 2, 4, 3, 5, 6, 7, 9, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24]]
+datav = datav.iloc[:, [0, 1, 3, 2, 4, 5, 7, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 19]]
 
 X_val_scaled = scaler.transform(datav)
 

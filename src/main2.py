@@ -3,7 +3,6 @@ from tensorflow.keras.layers import Dense
 from sklearn.preprocessing import StandardScaler
 from prepare_data2 import prepare_data
 from sklearn.model_selection import train_test_split
-
 import joblib
 
 df = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/raw_data.csv')
@@ -19,7 +18,8 @@ X_test_scaled = scaler.transform(X_test)
 
 def create_model():
     model = Sequential([
-        Dense(32, activation='relu', input_shape=(32,)),
+        Dense(27, activation='relu', input_shape=(27,)),
+        Dense(16, activation='relu'),
         Dense(16, activation='relu'),
         Dense(1, activation='sigmoid')
     ])
@@ -34,9 +34,8 @@ joblib.dump(model, '../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/
 model = joblib.load('../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model2.pkl')
 
 datav = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/validation.csv')
-datav.insert(5, 'Married_nan', 0)
 
-datav = datav.iloc[:, [0, 1, 2, 4, 3, 5, 6, 7, 9, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24, 26, 27, 28, 29, 30, 31]]
+datav = datav.iloc[:, [0, 1, 3, 2, 4, 5, 7, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 19, 21, 22, 23, 24, 25, 26]]
 
 X_val_scaled = scaler.transform(datav)
 
