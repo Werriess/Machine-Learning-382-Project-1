@@ -74,7 +74,7 @@ def update_output(n_clicks, *inputs):
         df = pd.DataFrame(data)
         
         # Append data to CSV file
-        df.to_csv('./Project 1 MLG/data/loan_applications.csv', mode='a', header=False, index=False)
+        df.to_csv('../Machine-Learning-382-Project-1.csv', mode='a', header=False, index=False)
         
         return 'Data added to CSV successfully.'
 
