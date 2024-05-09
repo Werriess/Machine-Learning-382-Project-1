@@ -5,7 +5,7 @@ from prepare_data import prepare_data
 from sklearn.model_selection import train_test_split
 import joblib
 
-df = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/raw_data.csv')
+df = prepare_data('../data/raw_data.csv')
 df.drop(columns = 'Married_nan', inplace= True)
 
 X = df.drop(['Loan_Status'], axis=1)
@@ -29,11 +29,11 @@ def create_model():
 model = create_model()  
 model.fit(X_train_scaled, y_train, epochs=15, batch_size=32, validation_data=(X_test_scaled, y_test))
 
-joblib.dump(model, '../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model1.pkl')
+joblib.dump(model, '../artifacts/model1.pkl')
 
-model = joblib.load('../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model1.pkl')
+model = joblib.load('../model1.pkl')
 
-datav = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/validation.csv')
+datav = prepare_data('../data/validation.csv')
 
 X_val_scaled = scaler.transform(datav)
 
