@@ -7,6 +7,7 @@ from src.prepare_data2 import prepare_data
 
 # Initialize Dash app
 app = dash.Dash(__name__)
+server = app.server
 
 # Define layout
 app.layout = html.Div([
