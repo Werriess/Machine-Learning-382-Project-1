@@ -1,6 +1,9 @@
 import dash
 from dash import html, dcc, Input, Output
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
+import joblib
+from src.prepare_data2 import prepare_data
 
 # Initialize Dash app
 app = dash.Dash(__name__)
@@ -9,51 +12,51 @@ app = dash.Dash(__name__)
 app.layout = html.Div([
     html.H1("Loan Application"),
     html.Div([
-        html.Label("Input 1"),
+        html.Label("Loan_ID"),
         dcc.Input(id='input1', type='text')
     ]),
     html.Div([
-        html.Label("Input 2"),
+        html.Label("Gender"),
         dcc.Input(id='input2', type='text')
     ]),
     html.Div([
-        html.Label("Input 3"),
+        html.Label("Married"),
         dcc.Input(id='input3', type='text')
     ]),
     html.Div([
-        html.Label("Input 4"),
+        html.Label("Dependents"),
         dcc.Input(id='input4', type='text')
     ]),
     html.Div([
-        html.Label("Input 5"),
+        html.Label("Education"),
         dcc.Input(id='input5', type='text')
     ]),
     html.Div([
-        html.Label("Input 6"),
+        html.Label("Self_Employed"),
         dcc.Input(id='input6', type='text')
     ]),
     html.Div([
-        html.Label("Input 7"),
+        html.Label("ApplicantIncome"),
         dcc.Input(id='input7', type='text')
     ]),
     html.Div([
-        html.Label("Input 8"),
+        html.Label("CoapplicantIncome"),
         dcc.Input(id='input8', type='text')
     ]),
     html.Div([
-        html.Label("Input 9"),
+        html.Label("LoanAmount"),
         dcc.Input(id='input9', type='text')
     ]),
     html.Div([
-        html.Label("Input 10"),
+        html.Label("Loan_Amount_Term"),
         dcc.Input(id='input10', type='text')
     ]),
     html.Div([
-        html.Label("Input 11"),
+        html.Label("Credit_History"),
         dcc.Input(id='input11', type='text')
     ]),
     html.Div([
-        html.Label("Input 12"),
+        html.Label("Property_Area"),
         dcc.Input(id='input12', type='text')
     ]),
     
@@ -74,9 +77,20 @@ def update_output(n_clicks, *inputs):
         df = pd.DataFrame(data)
         
         # Append data to CSV file
-        df.to_csv('./Project 1 MLG/data/loan_applications.csv', mode='a', header=False, index=False)
+        df.to_csv('../MLG382 Projects/Machine-Learning-382-Project-1/data/loan_applications.csv', mode='a', header=False, index=False)
         
-        return 'Data added to CSV successfully.'
+        return make_prediction()
+    
+def make_prediction():
+    prediction_data = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/loan_applications.csv')
+    model = joblib.load('../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model1.pkl')
+    
+    scaler = StandardScaler()
+    scaled_input = scaler.transform(prediction_data)
+    
+    prediction = model.predict(scaled_input)
+    
+    return prediction
 
 if __name__ == '__main__':
     app.run_server(debug=True)
