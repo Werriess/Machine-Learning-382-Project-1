@@ -5,7 +5,7 @@ from prepare_data import prepare_data
 from sklearn.model_selection import train_test_split
 import joblib
 
-df = prepare_data('./Project 1 MLG/data/raw_data.csv')
+df = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/raw_data.csv')
 df.drop(columns = 'Married_nan', inplace= True)
 
 X = df.drop(['Loan_Status'], axis=1)
@@ -26,14 +26,18 @@ def create_model():
     ])
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
+model = create_model()  
+model.fit(X_train_scaled, y_train, epochs=15, batch_size=32, validation_data=(X_test_scaled, y_test))
 
-model = joblib.load('./Project 1 MLG/artifacts/model1.pkl')
+joblib.dump(model, '../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model1.pkl')
 
-datav = prepare_data('./Project 1 MLG/data/validation.csv')
+model = joblib.load('../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model1.pkl')
 
-X = datav
+datav = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/validation.csv')
 
-predictions = model.predict(X)
+X_val_scaled = scaler.transform(datav)
+
+predictions = model.predict(X_val_scaled)
 
 predictions_arr = []
 
