@@ -1,4 +1,3 @@
-
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.preprocessing import StandardScaler
@@ -7,8 +6,7 @@ from sklearn.model_selection import train_test_split
 
 import joblib
 
-df = prepare_data('./Project 1 MLG/data/raw_data.csv')
-df.drop(columns = 'Married_nan', inplace= True)
+df = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/raw_data.csv')
 
 X = df.drop(['Loan_Status'], axis=1)
 y = df['Loan_Status']
@@ -21,23 +19,38 @@ X_test_scaled = scaler.transform(X_test)
 
 def create_model():
     model = Sequential([
-        Dense(31, activation='relu', input_shape=(31,)),
+        Dense(32, activation='relu', input_shape=(32,)),
         Dense(16, activation='relu'),
         Dense(1, activation='sigmoid')
     ])
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
 
+model = create_model()  
+model.fit(X_train_scaled, y_train, epochs=15, batch_size=32, validation_data=(X_test_scaled, y_test))
 
-feature_m = joblib.load('./Project 1 MLG/artifacts/model2.pkl')
+joblib.dump(model, '../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model2.pkl')
 
-feature_data = prepare_data('./Project 1 MLG/data/validation.csv')
+model = joblib.load('../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model2.pkl')
 
-X = feature_data
+datav = prepare_data('../MLG382 Projects/Machine-Learning-382-Project-1/data/validation.csv')
+datav.insert(5, 'Married_nan', 0)
 
-feature_data['Loan_Status'] = feature_m.predict(X)
+datav = datav.iloc[:, [0, 1, 2, 4, 3, 5, 6, 7, 9, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24, 26, 27, 28, 29, 30, 31]]
 
-print(feature_data.head(100))
+X_val_scaled = scaler.transform(datav)
+
+predictions = model.predict(X_val_scaled)
+
+predictions_arr = []
+
+for status in predictions:
+    if status > 0.5:
+        predictions_arr.append('Yes')
+    else:
+        predictions_arr.append('No')
+
+print(predictions_arr)
 
 
 
