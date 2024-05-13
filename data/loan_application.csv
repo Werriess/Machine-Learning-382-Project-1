@@ -1,2 +1,2 @@
 Loan_ID,Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,Credit_History,Property_Area
-1,Male,Yes,1,Graduate,Yes,12,12,12,12,1,Urban
+1,Male,Yes,1,Not Graduate,Yes,12222,121222,1222,24,1,Rural

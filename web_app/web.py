@@ -195,7 +195,7 @@ def prepare_data(data):
     
 def make_prediction(data):
     prediction_data = data
-    model = joblib.load('../MLG382 Projects/Machine-Learning-382-Project-1/artifacts/model2.pkl')
+    model = joblib.load('../model2.pkl')
     
     scaler = StandardScaler()
     scaler.fit(prediction_data) 
