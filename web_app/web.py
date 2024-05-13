@@ -8,6 +8,7 @@ import joblib
 
 # Initialize Dash app
 app = dash.Dash(__name__)
+server = app.server
 
 # Define layout
 
